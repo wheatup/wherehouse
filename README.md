@@ -2,13 +2,14 @@
 
 Redux sucks.
 
-So I made a lightweight global state management solution associated with react hooks.
+So I made a lightweight global state management solution using react hooks.
 
+Should not be used by anyone except myself.
 
 ### Install
 
 ```
-npm i wherehouse
+$ npm i wherehouse
 ```
 
 ### Usage
@@ -24,22 +25,30 @@ const AGE = Symbol();
 
 wherehouse.init({
 	[NAME]: 'Alice',
-	[AGE]: 18
+	[AGE]: 18,
 });
 
 function App() {
-	// Use a data by key
+	// A global data associated with the key "AGE", a hook
 	const age = wherehouse.useData(AGE);
-
+	
 	const updateAge = useCallback(() => {
-		// Set a data by key
+		// Get a snapshot of a value, not a hook
+		const name = wherehouse.getData(NAME);
+
+		// Update the value and the view
 		wherehouse.setData(AGE, age + 1);
+		
+		console.log(`${name}'s age has been set to: ${age + 1}`);
 	}, [age]);
 
 	return (
-		<div onClick={updateAge}>{age}</div>
+		<div className="app">
+			<span onClick={updateAge}>{age}</span>
+		</div>
 	);
 }
 
 export default App;
+
 ```
