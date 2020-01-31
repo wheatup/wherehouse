@@ -55,7 +55,7 @@ const init = (data) => {
 	Object.assign(globalData, data);
 }
 
-exports.module = {
+module.exports = {
 	init,
 	useData,
 	setData,
