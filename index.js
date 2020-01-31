@@ -1,15 +1,8 @@
 const { useState, useEffect } = require('react');
-const globalData = {
-	
-};
 
-const listeners = {
-
-};
-
-const states = {
-
-};
+const globalData = {};
+const listeners = {};
+const states = {};
 
 const getState = identifier => {
 	if (states[identifier]) {
@@ -55,8 +48,13 @@ const init = (data) => {
 	Object.assign(globalData, data);
 }
 
+const addData = (key, value) => {
+	globalData[key] = value;
+}
+
 module.exports = {
 	init,
+	addData,
 	useData,
 	setData,
 	getData
