@@ -17,38 +17,40 @@ $ npm i wherehouse
 > App.js
 
 ```javascript
-import React, { useCallback } from 'react';
-import wherehouse from 'wherehouse';
+import React from 'react';
+import wherehouse, { setData, useData } from 'wherehouse';
 
-const NAME = Symbol();
-const AGE = Symbol();
-
+// Initialize the store
 wherehouse.init({
-	[NAME]: 'Alice',
-	[AGE]: 18,
+	NAME: 'Alice',
+	AGE: 18,
 });
 
 function App() {
-	// A global data associated with the key "AGE", a hook
-	const age = wherehouse.useData(AGE);
-	
-	const updateAge = useCallback(() => {
-		// Get a snapshot of a value, not a hook
-		const name = wherehouse.getData(NAME);
+	// Use a data from the store
+	const age = useData('AGE');
 
-		// Update the value and the view
-		wherehouse.setData(AGE, age + 1);
-		
-		console.log(`${name}'s age has been set to: ${age + 1}`);
-	}, [age]);
+	// Update a data from the store
+	const addAge = amount => setData('AGE', age + amount);
 
 	return (
 		<div className="app">
-			<span onClick={updateAge}>{age}</span>
+			<User />
+			<button onClick={() => addAge(1)} >Age+1</button>
 		</div>
 	);
 }
 
-export default App;
+const User = props => {
+	// Use data from store
+	const name = useData('NAME');
+	const age = useData('AGE');
 
+	return (
+		<div>
+			<h2>Name: {name}</h2>
+			<h2>Age: {age}</h2>
+		</div>
+	);
+}
 ```
