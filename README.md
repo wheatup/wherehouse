@@ -18,30 +18,38 @@ $ npm i wherehouse
 
 ```javascript
 import React from 'react';
-import wherehouse, { setData, useData } from 'wherehouse';
+import { init, setData } from 'wherehouse';
+import User from './components/User';
 
 // Initialize the store
-wherehouse.init({
+init({
 	NAME: 'Alice',
 	AGE: 18,
 });
 
 function App() {
-	// Use a data from the store
-	const age = useData('AGE');
-
 	// Update a data from the store
-	const addAge = amount => setData('AGE', age + amount);
+	// While this updates, the `age` in `User` component also updates
+	const addAge = () => setData('AGE', age => age + 1);
 
 	return (
 		<div className="app">
 			<User />
-			<button onClick={() => addAge(1)} >Age+1</button>
+			<button onClick={addAge}>Age+1</button>
 		</div>
 	);
 }
 
-const User = props => {
+export default App;
+```
+
+> User.js
+```javascript
+import React from 'react';
+
+import { useData } from 'wherehouse';
+
+const User = () => {
 	// Use data from store
 	const name = useData('NAME');
 	const age = useData('AGE');
@@ -53,4 +61,6 @@ const User = props => {
 		</div>
 	);
 }
+
+export default User;
 ```
