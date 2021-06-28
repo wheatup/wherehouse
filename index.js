@@ -9,9 +9,9 @@ const getData = identifier => {
 
 const useData = identifier => {
 	const [state, setState] = useState(globalData.get(identifier));
-	if (!listeners.has(identifier)) {
+	if (!listeners.has(identifier))
 		listeners.set(identifier, new Set());
-	}
+
 	useEffect(() => {
 		listeners.get(identifier).add(setState);
 		return () => {
@@ -21,17 +21,19 @@ const useData = identifier => {
 	return state;
 };
 
-const setData = async (identifier, data) => {
-	let result = data;
-	if (typeof data === 'function') {
-		result = await data(globalData.get(identifier));
-	}
-	globalData.set(identifier, result);
+const setData = (identifier, data) => new Promise(async resolve => {
+	if (typeof data === 'function')
+		data = data(globalData.get(identifier));
+	if (data instanceof Promise)
+		data = await data;
 
-	if (listeners.has(identifier)) {
+	globalData.set(identifier, data);
+	if (listeners.has(identifier))
 		listeners.get(identifier).forEach(setState => setState(data));
-	}
-}
+
+	setTimeout(() => resolve(), 0);
+});
+
 
 const init = (data) => Object.entries(data).forEach(([key, value]) => globalData.set(key, value));
 
