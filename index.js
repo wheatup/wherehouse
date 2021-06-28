@@ -1,32 +1,21 @@
 const { useState, useEffect } = require('react');
 
-const globalData = {};
-const listeners = {};
-const states = {};
-
-const getState = identifier => {
-	if (states[identifier]) {
-		return states[identifier];
-	} else {
-		const states = useState(globalData[identifier]);
-		states[identifier] = states;
-		return states;
-	}
-}
+const globalData = new Map();
+const listeners = new Map();
 
 const getData = identifier => {
-	return globalData[identifier];
+	return globalData.get(identifier);
 };
 
 const useData = identifier => {
-	const [state, setState] = getState(identifier);
-	if (!listeners[identifier]) {
-		listeners[identifier] = new Set();
+	const [state, setState] = useState(globalData.get(identifier));
+	if (!listeners.has(identifier)) {
+		listeners.set(identifier, new Set());
 	}
-	listeners[identifier].add(setState);
 	useEffect(() => {
+		listeners.get(identifier).add(setState);
 		return () => {
-			listeners[identifier].delete(setState);
+			listeners.get(identifier).delete(setState);
 		};
 	}, []);
 	return state;
@@ -35,27 +24,27 @@ const useData = identifier => {
 const setData = async (identifier, data) => {
 	let result = data;
 	if (typeof data === 'function') {
-		result = await data(globalData[identifier]);
+		result = await data(globalData.get(identifier));
 	}
-	globalData[identifier] = result;
+	globalData.set(identifier, result);
 
-	if (listeners[identifier]) {
-		listeners[identifier].forEach(setState => setState(data));
+	if (listeners.has(identifier)) {
+		listeners.get(identifier).forEach(setState => setState(data));
 	}
 }
 
-const init = (data) => {
-	Object.assign(globalData, data);
-}
+const init = (data) => Object.entries(data).forEach(([key, value]) => globalData.set(key, value));
 
 const addData = (key, value) => {
-	globalData[key] = value;
+	globalData.set(key, value);
 }
 
-module.exports = {
-	init,
-	addData,
-	useData,
-	setData,
-	getData
-};
+if (typeof module !== 'undefined') {
+	module.exports = {
+		init,
+		addData,
+		useData,
+		setData,
+		getData
+	};
+}
