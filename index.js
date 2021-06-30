@@ -1,21 +1,21 @@
 const { useState, useEffect } = require('react');
 
-const globalData = new Map();
-const listeners = new Map();
+const globalData = {};
+const listeners = {};
 
 const getData = identifier => {
-	return globalData.get(identifier);
+	return globalData[identifier];
 };
 
 const useData = identifier => {
-	const [state, setState] = useState(globalData.get(identifier));
-	if (!listeners.has(identifier))
-		listeners.set(identifier, new Set());
+	const [state, setState] = useState(globalData[identifier]);
+	if (!listeners[identifier])
+		listeners[identifier] = new Set();
 
 	useEffect(() => {
-		listeners.get(identifier).add(setState);
+		listeners[identifier].add(setState);
 		return () => {
-			listeners.get(identifier).delete(setState);
+			listeners[identifier].delete(setState);
 		};
 	}, []);
 	return state;
@@ -23,22 +23,22 @@ const useData = identifier => {
 
 const setData = (identifier, data) => new Promise(async resolve => {
 	if (typeof data === 'function')
-		data = data(globalData.get(identifier));
+		data = data(globalData[identifier]);
 	if (data instanceof Promise)
 		data = await data;
 
-	globalData.set(identifier, data);
-	if (listeners.has(identifier))
-		listeners.get(identifier).forEach(setState => setState(data));
+	globalData[identifier] = data;
+	if (listeners[identifier])
+		listeners[identifier].forEach(setState => setState(data));
 
 	setTimeout(() => resolve(), 0);
 });
 
 
-const init = (data) => Object.entries(data).forEach(([key, value]) => globalData.set(key, value));
+const init = data => Object.assign(globalData, data);
 
 const addData = (key, value) => {
-	globalData.set(key, value);
+	globalData[key] = value;
 }
 
 if (typeof module !== 'undefined') {
