@@ -1,38 +1,38 @@
 declare namespace wherehouse {
 	/**
-	 * 直接获取数据
+	 * Get data snapshot from the database.
 	 *
-	 * @argument identifier 数据标识
+	 * @argument identifier Data identifier
 	 */
 	export function getData<T>(identifier: string | number): T;
 
 	/**
-	 * 使用数据(Hook模式)
+	 * Use data as a hook.
 	 *
-	 * @argument identifier 数据标识
+	 * @argument identifier Data identifier
 	 */
 	export function useData<T>(identifier: string | number): T;
 
 	/**
-	 * 设置数据
+	 * Set data to the database.
 	 *
-	 * @argument identifier 数据标识
-	 * @argument data 数据
+	 * @argument identifier Data identifier
+	 * @argument data Data
 	 */
 	export function setData<T>(identifier: string | number, data: T): void;
 
 	/**
-	 * 增加初始数据至数据库
+	 * Add a piece of data to database with a new identifier.
 	 *
-	 * @argument identifier 数据标识
-	 * @argument data 数据
+	 * @argument identifier Data identifier
+	 * @argument data Data
 	 */
 	export function addData<T>(identifier: string | number, data: T): void;
 
 	/**
-	 * 初始化数据库
+	 * Initialize the database with an object.
 	 *
-	 * @argument data 初始数据
+	 * @argument data Initial data mapping.
 	 */
 	export function init(data: object): void;
 }
