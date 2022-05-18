@@ -24,14 +24,14 @@ const useData = identifier => {
 const setData = (identifier, data) => new Promise(async resolve => {
 	if (typeof data === 'function')
 		data = data(globalData[identifier]);
-	if (data instanceof Promise)
+	else if (data instanceof Promise)
 		data = await data;
 
 	globalData[identifier] = data;
 	if (listeners[identifier])
 		listeners[identifier].forEach(setState => setState(data));
 
-	setTimeout(() => resolve(), 0);
+	setTimeout(() => resolve(globalData[identifier]), 0);
 });
 
 

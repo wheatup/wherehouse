@@ -19,7 +19,7 @@ declare namespace wherehouse {
 	 * @argument identifier Data identifier
 	 * @argument data Data
 	 */
-	export function setData<T>(identifier: string | number, data: T): void;
+	export function setData<T>(identifier: string | number, data: T): Promise<T>;
 
 	/**
 	 * Add a piece of data to database with a new identifier.
