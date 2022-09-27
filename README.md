@@ -1,4 +1,4 @@
-# Wherehouse
+# udf-state
 
 Redux sucks.
 
@@ -9,13 +9,13 @@ Should not be used by anyone except myself.
 ### Install
 
 ```
-$ npm i https://github.com/wheatup/wherehouse
+$ npm i https://github.com/wheatup/udf-state
 ```
 
 ### Install(Obsolete)
 
 ```
-$ npm i wherehouse
+$ npm i udf-state
 ```
 
 
@@ -25,7 +25,7 @@ $ npm i wherehouse
 
 ```javascript
 import React from 'react';
-import { init, setData } from 'wherehouse';
+import { init, setData } from 'udf-state';
 import User from './components/User';
 
 // Initialize the store
@@ -54,7 +54,7 @@ export default App;
 ```javascript
 import React from 'react';
 
-import { useData } from 'wherehouse';
+import { useData } from 'udf-state';
 
 const User = () => {
 	// Use data from store

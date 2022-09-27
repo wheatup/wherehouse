@@ -1,5 +1,5 @@
 {
-	"name": "@undefineded/wherehouse",
+	"name": "udf-state",
 	"version": "1.3.2",
 	"description": "",
 	"main": "index.js",
@@ -20,6 +20,6 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wheatup/wherehouse"
+		"url": "https://github.com/wheatup/udf-state"
 	}
 }

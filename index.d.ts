@@ -1,4 +1,4 @@
-declare namespace wherehouse {
+declare namespace udf-state {
 	/**
 	 * Get data snapshot from the database.
 	 *
@@ -37,4 +37,4 @@ declare namespace wherehouse {
 	export function init(data: object): void;
 }
 
-export = wherehouse;
+export = udf-state;
