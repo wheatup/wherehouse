@@ -9,8 +9,15 @@ Should not be used by anyone except myself.
 ### Install
 
 ```
+$ npm i https://github.com/wheatup/wherehouse
+```
+
+### Install(Obsolete)
+
+```
 $ npm i wherehouse
 ```
+
 
 ### Usage
 
