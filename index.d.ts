@@ -1,4 +1,4 @@
-declare namespace udf-state {
+declare namespace udfState {
 	/**
 	 * Get data snapshot from the database.
 	 *
@@ -37,4 +37,4 @@ declare namespace udf-state {
 	export function init(data: object): void;
 }
 
-export = udf-state;
+export = udfState;

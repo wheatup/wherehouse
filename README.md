@@ -9,7 +9,7 @@ Should not be used by anyone except myself.
 ### Install
 
 ```
-$ npm i https://github.com/wheatup/udf-state
+$ npm i https://github.com/wheatup/wherehouse
 ```
 
 ### Install(Obsolete)
